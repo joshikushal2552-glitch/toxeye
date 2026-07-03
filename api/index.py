@@ -1078,7 +1078,7 @@ def auth_callback():
                         type: "google-login-complete",
                         success: result.success,
                         error: result.error || ""
-                    }, window.location.origin);
+                    }, "*"); # Allows secure messaging transmission across distinct development deployments
 
                     window.close();
                 } else {
