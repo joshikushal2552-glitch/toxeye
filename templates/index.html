@@ -3137,6 +3137,20 @@ window.addEventListener("DOMContentLoaded", async function() {
                 setAuthMessage("Logged in with Google.");
                 window.history.replaceState({}, document.title, window.location.pathname);
                 refreshAuthUI();
+                
+                // === ADD THIS FIXED PADDING BLOCK HERE ===
+                // If this is running inside the popup window, inform the parent window and close up shop!
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: "google-login-complete",
+                        success: true,
+                        error: ""
+                    }, window.location.origin);
+                    
+                    window.close();
+                }
+                // =========================================
+
             } else {
                 setAuthMessage(result.error || "Google sync loop configuration mismatch.", true);
             }
@@ -3145,7 +3159,6 @@ window.addEventListener("DOMContentLoaded", async function() {
         }
     }
 });
-
 window.addEventListener("message", function(event) {
     if (event.origin !== window.location.origin) {
         return;
