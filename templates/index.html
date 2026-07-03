@@ -3145,10 +3145,11 @@ window.addEventListener("DOMContentLoaded", async function() {
                         type: "google-login-complete",
                         success: true,
                         error: ""
-                    }, "*"); // Using "*" allows cross-origin message delivery across Vercel preview links
+                    }, window.location.origin);
                     
                     window.close();
-                }========================================
+                }
+                // =========================================
 
             } else {
                 setAuthMessage(result.error || "Google sync loop configuration mismatch.", true);
